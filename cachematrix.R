@@ -22,14 +22,15 @@
 ## "C:/Users/MikeEpler/Documents/GitHub/ProgrammingAssignment2/cachematrix.R"
 ##
 ## This function creates a special "matrix" object that can cache its inverse
-##   1 Returns the content of a matrix 
-##   2 Sets the content of the matrix 
-##   3 Returns the stored inversion of the matrix 
-##   4 Sets the content of the inverted matrix
+##    Returns the content of a matrix 
+##    Sets the content of the matrix 
+##    Returns the stored inversion of the matrix 
+##    Sets the content of the inverted matrix
 ##
 makeCacheMatrix <- function(x = matrix()) {
                       m <- NULL
-
+                      
+                      ## Establish the matrix values for $set, $get, $setmatrix, $getmatrix
                       set <- function(y) {
                               x <<- y
                               m <<- NULL
@@ -40,7 +41,8 @@ makeCacheMatrix <- function(x = matrix()) {
                       setmatrix <- function(matrix) m <<- matrix
 
                       getmatrix <- function() m
-
+                      
+                      ## Coerce objects and return
                       list(set = set, get = get,
                               setmatrix = setmatrix,
                               getmatrix = getmatrix)
@@ -52,12 +54,12 @@ makeCacheMatrix <- function(x = matrix()) {
 ##
 cacheSolve <- function(x, ...) {
                       m <- x$getmatrix()
-                      if(!is.null(m)) { 
+                      if(!is.null(m)) {            ## if there is a cache
                               message("getting cached data")
-                              return(m)
+                              return(m)            ## Don't do anything just return 
                       }
-      data <- x$get()
-      m <- solve(data, ...)
-      x$setmatrix(m)
-      m
+      data <- x$get()                              ## If there is no cache get data
+      m <- solve(data, ...)                        ## Invert the Matrix using generic function solve{base}
+      x$setmatrix(m)                               ## Save the inverted matrix back to the x cache
+      m                                            ## return results
 }
